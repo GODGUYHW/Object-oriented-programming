@@ -9,5 +9,6 @@ public class main {
         board b = new board();
         b.setBoard(figures[0], figures[1]);
         b.freeMove(figures[0], "b8");
+        b.freeMove(figures[0], "h1");
     }
 }

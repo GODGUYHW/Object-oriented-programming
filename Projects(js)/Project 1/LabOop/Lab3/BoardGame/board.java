@@ -86,15 +86,15 @@ public class board {
         } else if (player.getColor() == true) {
             board[player.getRow() - 1][player.getColumns() - 1] = "xx";
             board[moveRow - 1][moveColumns - 1] = "W" + player.getName().substring(0, 1);
-            boardDisplay(player, moveRow - 1, moveColumns - 1);
+            boardDisplay();
         } else if (player.getColor() == false) {
             board[player.getRow() - 1][player.getColumns() - 1] = "xx";
             board[moveRow - 1][moveColumns - 1] = "B" + player.getName().substring(0, 1);
-            boardDisplay(player, moveRow - 1, moveColumns - 1);
+            boardDisplay();
         }
     }
 
-    public void boardDisplay(figure player, int moveRow, int moveColumns) {
+    public void boardDisplay() {
         System.out.print("   ");
         for (int i = 0; i < columns; i++) {
             System.out.print("    ");

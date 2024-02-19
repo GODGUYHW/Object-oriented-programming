@@ -6,7 +6,6 @@ public class figure {
     int BLACK = 0;
     int WHITE = 1;
     int color;
-    board board[][];
 
     public figure(String name, int color, int row, int columns) {
         this.name = name;

@@ -15,6 +15,7 @@ public class board {
         initializeBoard();
     }
 
+    // set null in board
     public void initializeBoard() {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
@@ -23,6 +24,7 @@ public class board {
         }
     }
 
+    // add figure
     public void addFigure(figure figure) {
         if (validatePosition(figure.getRow(), figure.getColumns())) {
             if (isOccupied(figure.getRow(), figure.getColumns())) {
@@ -36,10 +38,12 @@ public class board {
         }
     }
 
+    // check the right position
     private boolean validatePosition(int row, int column) {
         return row > 0 && row <= rows && column > 0 && column <= columns;
     }
 
+    // check is empty
     private boolean isOccupied(int row, int column) {
         for (figure figure : figures) {
             if (figure.getRow() == row && figure.getColumns() == column) {
@@ -49,19 +53,21 @@ public class board {
         return false;
     }
 
+    // update board
     private void updateBoard(figure figure) {
         String symbol = figure.getColor() ? "W" + figure.getName().substring(0, 1)
                 : "B" + figure.getName().substring(0, 1);
         board[figure.getRow() - 1][figure.getColumns() - 1] = symbol;
     }
 
+    // move in board
     public void freeMove(figure player, String locations) {
         int moveRow = 0;
         int moveColumns = 0;
         int isWhite = 0;
         int isBlack = 0;
 
-        // turn string into int first character
+        // turn first string into int
         char toInt = locations.charAt(0);
         if (toInt >= 'a' && toInt <= 'h') {
             moveColumns = moveColumns * 16 + (toInt - 'a' + 1);
@@ -97,6 +103,7 @@ public class board {
         }
     }
 
+    // displayboard
     public void boardDisplay() {
         System.out.print("   ");
         for (int i = 0; i < columns; i++) {

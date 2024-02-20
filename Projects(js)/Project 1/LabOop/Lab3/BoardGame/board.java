@@ -5,8 +5,8 @@ import java.util.List;
 
 public class board {
     int rows = 8, columns = 8;
-    private String[][] board;
-    private List<figure> figures;
+    public String[][] board;
+    public List<figure> figures;
     char[] letters = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' };
 
     public board() {
@@ -53,54 +53,30 @@ public class board {
         return false;
     }
 
+    public void getMove(figure player, int row, int column) {
+        if (player.getColor() == true && board[row - 1][column - 1].charAt(0) == 'W') {
+            System.out.println("Can not move to that place");
+            return;
+        } // check is it black and same color
+        else if (player.getColor() == false && board[row - 1][column - 1].charAt(0) == 'B') {
+            System.out.println("Can not move to that place");
+            return;
+        } else if (player.getColor() == true) {
+            board[player.getRow() - 1][player.getColumns() - 1] = "xx";
+            board[row - 1][column - 1] = "W" + player.getName().substring(0, 1);
+            boardDisplay();
+        } else if (player.getColor() == false) {
+            board[player.getRow() - 1][player.getColumns() - 1] = "xx";
+            board[row - 1][column - 1] = "B" + player.getName().substring(0, 1);
+            boardDisplay();
+        }
+    }
+
     // update board
     private void updateBoard(figure figure) {
         String symbol = figure.getColor() ? "W" + figure.getName().substring(0, 1)
                 : "B" + figure.getName().substring(0, 1);
         board[figure.getRow() - 1][figure.getColumns() - 1] = symbol;
-    }
-
-    // move in board
-    public void freeMove(figure player, String locations) {
-        int moveRow = 0;
-        int moveColumns = 0;
-        int isWhite = 0;
-        int isBlack = 0;
-
-        // turn first string into int
-        char toInt = locations.charAt(0);
-        if (toInt >= 'a' && toInt <= 'h') {
-            moveColumns = moveColumns * 16 + (toInt - 'a' + 1);
-        } else {
-            System.out.println("Invalid character: " + toInt + "!!!");
-            return;
-        }
-
-        // turn second character into int
-        toInt = locations.charAt(1);
-        if (toInt >= '0' && toInt <= '8') {
-            moveRow = moveRow * 16 + (toInt - '0');
-        } else {
-            System.out.println("Invalid character: " + toInt + "!!!");
-            return;
-        }
-        // check is it white and same color
-        if (player.getColor() == true && board[moveRow - 1][moveColumns - 1].charAt(0) == 'W') {
-            System.out.println("Can not move to that place");
-            return;
-        } // check is it black and same color
-        else if (player.getColor() == false && board[moveRow - 1][moveColumns - 1].charAt(0) == 'B') {
-            System.out.println("Can not move to that place");
-            return;
-        } else if (player.getColor() == true) {
-            board[player.getRow() - 1][player.getColumns() - 1] = "xx";
-            board[moveRow - 1][moveColumns - 1] = "W" + player.getName().substring(0, 1);
-            boardDisplay();
-        } else if (player.getColor() == false) {
-            board[player.getRow() - 1][player.getColumns() - 1] = "xx";
-            board[moveRow - 1][moveColumns - 1] = "B" + player.getName().substring(0, 1);
-            boardDisplay();
-        }
     }
 
     // displayboard

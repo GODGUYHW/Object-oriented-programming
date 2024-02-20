@@ -6,12 +6,14 @@ public class figure {
     int BLACK = 0;
     int WHITE = 0;
     String color;
+    board board;
 
-    public figure(String name, String color, int row, int columns) {
+    public figure(String name, String color, int row, int columns, board board) {
         this.name = name;
         this.row = row;
         this.columns = columns;
         this.color = color;
+        this.board = board;
         if (color.toLowerCase() == "white") {
             WHITE = 1;
         } else if (color.toLowerCase() == "black") {
@@ -42,4 +44,27 @@ public class figure {
         }
     }
 
+    public void freeMove(String locations) {
+        int moveRow = 0;
+        int moveColumns = 0;
+
+        // turn first string into int
+        char toInt = locations.charAt(0);
+        if (toInt >= 'a' && toInt <= 'h') {
+            moveColumns = moveColumns * 16 + (toInt - 'a' + 1);
+        } else {
+            System.out.println("Invalid character: " + toInt + "!!!");
+            return;
+        }
+
+        // turn second character into int
+        toInt = locations.charAt(1);
+        if (toInt >= '0' && toInt <= '8') {
+            moveRow = moveRow * 16 + (toInt - '0');
+        } else {
+            System.out.println("Invalid character: " + toInt + "!!!");
+            return;
+        }
+        board.getMove(this, moveRow, moveColumns);
+    }
 }

@@ -70,7 +70,6 @@ public class figure {
             System.out.println("Invalid character: " + toInt + "!!!");
             return;
         }
-
         board.getMove(a, moveRow, moveColumns);
     }
 }

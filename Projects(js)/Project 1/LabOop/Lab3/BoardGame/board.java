@@ -64,10 +64,12 @@ public class board {
         } else if (player.getColor() == true) {
             board[player.getRow() - 1][player.getColumns() - 1] = "xx";
             board[row - 1][column - 1] = "W" + player.getName().substring(0, 1);
+            player.setNewLocation(row, column);
             boardDisplay();
         } else if (player.getColor() == false) {
             board[player.getRow() - 1][player.getColumns() - 1] = "xx";
             board[row - 1][column - 1] = "B" + player.getName().substring(0, 1);
+            player.setNewLocation(row, column);
             boardDisplay();
         }
     }

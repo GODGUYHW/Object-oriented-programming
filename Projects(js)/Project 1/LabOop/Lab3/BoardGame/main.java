@@ -11,8 +11,9 @@ public class main {
         b.addFigure(player2);
         b.addFigure(player3);
         b.boardDisplay();
-        player2.freeMove("h7");
-        player1.freeMove("h7");
-        player3.freeMove("h7");
+        player1.freeMove(player1, "b8");
+        player1.freeMove(player1, "h8");
+        player2.freeMove(player1, "h4");
+        player2.freeMove(player2, "h3");
     }
 }

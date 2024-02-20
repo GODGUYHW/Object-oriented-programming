@@ -36,6 +36,11 @@ public class figure {
         return columns;
     }
 
+    public void setNewLocation(int newRow, int newColumn) {
+        this.row = newRow;
+        this.columns = newColumn;
+    }
+
     public boolean getColor() {
         if (WHITE == 1) {
             return true;
@@ -44,7 +49,7 @@ public class figure {
         }
     }
 
-    public void freeMove(String locations) {
+    public void freeMove(figure a, String locations) {
         int moveRow = 0;
         int moveColumns = 0;
 
@@ -65,6 +70,7 @@ public class figure {
             System.out.println("Invalid character: " + toInt + "!!!");
             return;
         }
-        board.getMove(this, moveRow, moveColumns);
+
+        board.getMove(a, moveRow, moveColumns);
     }
 }

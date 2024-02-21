@@ -3,21 +3,18 @@ package LabOop.Lab3.BoardGame;
 public class figure {
     String name;
     int row, columns;
-    int BLACK = 0;
     int WHITE = 0;
     String color;
-    board board;
 
-    public figure(String name, String color, int row, int columns, board board) {
+    public figure(String name, String color, int row, int columns) {
         this.name = name;
         this.row = row;
         this.columns = columns;
         this.color = color;
-        this.board = board;
         if (color.toLowerCase() == "white") {
             WHITE = 1;
         } else if (color.toLowerCase() == "black") {
-            BLACK = 1;
+
         } else if (color.toLowerCase() != "white" || color.toLowerCase() != "black") {
             System.out.println("Enter only white or black");
             System.exit(0);
@@ -49,7 +46,7 @@ public class figure {
         }
     }
 
-    public void freeMove(figure a, String locations) {
+    public boolean freeMove(figure a, String locations, board board) {
         int moveRow = 0;
         int moveColumns = 0;
 
@@ -59,7 +56,7 @@ public class figure {
             moveColumns = moveColumns * 16 + (toInt - 'a' + 1);
         } else {
             System.out.println("Invalid character: " + toInt + "!!!");
-            return;
+            return false;
         }
 
         // turn second character into int
@@ -68,8 +65,17 @@ public class figure {
             moveRow = moveRow * 16 + (toInt - '0');
         } else {
             System.out.println("Invalid character: " + toInt + "!!!");
-            return;
+            return false;
         }
-        board.getMove(a, moveRow, moveColumns);
+        if (this.getColor() == a.getColor()) {
+            System.out.println("Can not move to this place");
+            return false;
+        } else if (!board.validatePosition(moveRow, moveColumns)) {
+            return false;
+        } else {
+            return true;
+        }
+
     }
+
 }

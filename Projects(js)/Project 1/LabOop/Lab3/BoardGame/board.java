@@ -1,84 +1,74 @@
 package LabOop.Lab3.BoardGame;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class board {
     int rows = 8, columns = 8;
-    public String[][] board;
-    public List<figure> figures;
+
+    figure[][] setFigures;
     char[] letters = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' };
 
     public board() {
-        board = new String[rows][columns];
-        figures = new ArrayList<>();
-        initializeBoard();
-    }
-
-    // set null in board
-    public void initializeBoard() {
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                board[i][j] = "xx";
-            }
-        }
+        this.setFigures = new figure[rows][columns];
+        setFigures[0][1] = new figure("P", "white", 0, 0);
+        setFigures[0][0] = new figure("Queen", "white", 1, 1);
     }
 
     // add figure
     public void addFigure(figure figure) {
-        if (validatePosition(figure.getRow(), figure.getColumns())) {
-            if (isOccupied(figure.getRow(), figure.getColumns())) {
+        int setRow = figure.getRow() - 1;
+        int setColumn = figure.getColumns() - 1;
+        if (!validatePosition(setRow, setColumn)) {
+            if (setFigures[setRow][setColumn] != null) {
                 System.out.println("Can't add figure to occupied position.");
                 return;
             }
-            figures.add(figure);
-            updateBoard(figure);
         } else {
-            System.out.println("Invalid position. Board starts at 1 and is within 1-" + rows + ", 1-" + columns);
+            setFigures[setRow][setColumn] = figure;
         }
+
     }
 
-    // check the right position
-    private boolean validatePosition(int row, int column) {
+    public boolean validatePosition(int row, int column) {
         return row > 0 && row <= rows && column > 0 && column <= columns;
     }
 
-    // check is empty
-    private boolean isOccupied(int row, int column) {
-        for (figure figure : figures) {
-            if (figure.getRow() == row && figure.getColumns() == column) {
-                return true;
+    public void move(String figureName, String locations) {
+        int moveRow = 0;
+        int moveColumns = 0;
+
+        // turn first string into int
+        char toInt = locations.charAt(0);
+        if (toInt >= 'a' && toInt <= 'h') {
+            moveColumns = moveColumns * 16 + (toInt - 'a' + 1);
+        } else {
+            System.out.println("Invalid character: " + toInt + "!!!");
+            return;
+        }
+
+        // turn second character into int
+        toInt = locations.charAt(1);
+        if (toInt >= '0' && toInt <= '8') {
+            moveRow = moveRow * 16 + (toInt - '0');
+        } else {
+            System.out.println("Invalid character: " + toInt + "!!!");
+            return;
+        }
+        figure destinationFigure = setFigures[moveRow - 1][moveColumns - 1];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                figure currentFigure = setFigures[i][j];
+                if (currentFigure != null && currentFigure.getName().toLowerCase().equals(figureName.toLowerCase())) {
+                    if (destinationFigure != null && currentFigure.freeMove(destinationFigure, locations, this)) {
+                        setFigures[i][j] = null;
+                        currentFigure.setNewLocation(moveRow - 1, moveColumns - 1);
+                        setFigures[moveRow - 1][moveColumns - 1] = currentFigure;
+                    } else if (destinationFigure == null) {
+                        setFigures[i][j] = null;
+                        currentFigure.setNewLocation(moveRow - 1, moveColumns - 1);
+                        setFigures[moveRow - 1][moveColumns - 1] = currentFigure;
+                    }
+                }
             }
         }
-        return false;
-    }
-
-    public void getMove(figure player, int row, int column) {
-        if (player.getColor() == true && board[row - 1][column - 1].charAt(0) == 'W') {
-            System.out.println("Can not move to that place");
-            return;
-        } // check is it black and same color
-        else if (player.getColor() == false && board[row - 1][column - 1].charAt(0) == 'B') {
-            System.out.println("Can not move to that place");
-            return;
-        } else if (player.getColor() == true) {
-            board[player.getRow() - 1][player.getColumns() - 1] = "xx";
-            board[row - 1][column - 1] = "W" + player.getName().substring(0, 1);
-            player.setNewLocation(row, column);
-            boardDisplay();
-        } else if (player.getColor() == false) {
-            board[player.getRow() - 1][player.getColumns() - 1] = "xx";
-            board[row - 1][column - 1] = "B" + player.getName().substring(0, 1);
-            player.setNewLocation(row, column);
-            boardDisplay();
-        }
-    }
-
-    // update board
-    private void updateBoard(figure figure) {
-        String symbol = figure.getColor() ? "W" + figure.getName().substring(0, 1)
-                : "B" + figure.getName().substring(0, 1);
-        board[figure.getRow() - 1][figure.getColumns() - 1] = symbol;
     }
 
     // displayboard
@@ -95,7 +85,14 @@ public class board {
             System.out.print(" |");
             for (int j = 0; j < columns; j++) {
                 System.out.print("   ");
-                System.out.print(board[i][j]);
+                figure a = setFigures[i][j];
+                if (a != null && a.getColor()) {
+                    System.out.print("W" + a.getName().charAt(0));
+                } else if (a != null && !a.getColor()) {
+                    System.out.print("B" + a.getName().charAt(0));
+                } else {
+                    System.out.print("xx");
+                }
             }
             System.out.print(" |");
             System.out.println("");

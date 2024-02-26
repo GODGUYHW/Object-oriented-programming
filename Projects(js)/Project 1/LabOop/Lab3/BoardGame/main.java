@@ -4,10 +4,18 @@ public class main {
     public static void main(String[] args) {
         board b = new board();
         b.boardDisplay();
-        b.move("p", "h4");
+        b.move("b", "h6");
+        b.boardDisplay();
+        b.move("b", "f4");
+        b.boardDisplay();
+        b.move("b", "e3");
+        b.boardDisplay();
+        b.move("b", "c1");
+        b.boardDisplay();
+        b.move("b", "b2");
+        b.boardDisplay();
+        b.move("b", "a1");
         b.boardDisplay();
 
-        b.move("Queen", "h4");
-        b.boardDisplay();
     }
 }

@@ -1,6 +1,6 @@
 package LabOop.Lab3.BoardGame;
 
-public class figure {
+public abstract class figure {
     String name;
     int row, columns;
     int WHITE = 0;
@@ -78,4 +78,5 @@ public class figure {
 
     }
 
+    public abstract boolean moveCondition(figure a, String locations, board board);
 }

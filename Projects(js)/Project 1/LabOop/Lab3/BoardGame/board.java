@@ -2,14 +2,14 @@ package LabOop.Lab3.BoardGame;
 
 public class board {
     int rows = 8, columns = 8;
-
     figure[][] setFigures;
     char[] letters = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' };
 
     public board() {
         this.setFigures = new figure[rows][columns];
-        setFigures[0][1] = new figure("P", "white", 0, 0);
-        setFigures[0][0] = new figure("Queen", "white", 1, 1);
+        setFigures[0][1] = new pawn("P", "black", 0, 0);
+        setFigures[0][0] = new pawn("Queen", "white", 1, 1);
+        setFigures[0][2] = new Bishop("b", "white", 0, 2);
     }
 
     // add figure
@@ -57,14 +57,25 @@ public class board {
             for (int j = 0; j < columns; j++) {
                 figure currentFigure = setFigures[i][j];
                 if (currentFigure != null && currentFigure.getName().toLowerCase().equals(figureName.toLowerCase())) {
-                    if (destinationFigure != null && currentFigure.freeMove(destinationFigure, locations, this)) {
+                    if (destinationFigure != null && currentFigure.moveCondition(destinationFigure, locations, this)) {
                         setFigures[i][j] = null;
                         currentFigure.setNewLocation(moveRow - 1, moveColumns - 1);
                         setFigures[moveRow - 1][moveColumns - 1] = currentFigure;
-                    } else if (destinationFigure == null) {
+                    } else if (destinationFigure == null
+                            && currentFigure.moveCondition(destinationFigure, locations, this)) {
                         setFigures[i][j] = null;
                         currentFigure.setNewLocation(moveRow - 1, moveColumns - 1);
                         setFigures[moveRow - 1][moveColumns - 1] = currentFigure;
+                    } else {
+                        if (destinationFigure != null
+                                && !currentFigure.moveCondition(destinationFigure, locations, this)) {
+                            System.out.println("Can not move to the place that has the same color");
+                            return;
+                        } else {
+                            System.out.println("Invalid Move for " + currentFigure.getName());
+                            return;
+                        }
+
                     }
                 }
             }

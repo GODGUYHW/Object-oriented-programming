@@ -38,6 +38,9 @@ public class Bishop extends figure {
                 int intermediateColumn = this.columns + i * directionX;
                 if (board.getPiece(intermediateRow, intermediateColumn) != null) {
                     return false;
+                } else if (board.getPiece(intermediateRow, intermediateColumn) != null && a != null
+                        && this.getColor() != a.getColor()) {
+                    return false;
                 }
             }
             return true;

@@ -4,7 +4,7 @@ public class main {
     public static void main(String[] args) {
         board b = new board();
         b.boardDisplay();
-        b.move("b", "h6");
+        b.move("b", "a3");
         b.boardDisplay();
         b.move("b", "d2");
         b.boardDisplay();

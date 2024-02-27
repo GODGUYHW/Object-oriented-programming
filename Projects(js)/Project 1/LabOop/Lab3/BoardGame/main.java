@@ -6,7 +6,7 @@ public class main {
         b.boardDisplay();
         b.move("b", "h6");
         b.boardDisplay();
-        b.move("b", "f4");
+        b.move("b", "d2");
         b.boardDisplay();
         b.move("b", "e3");
         b.boardDisplay();

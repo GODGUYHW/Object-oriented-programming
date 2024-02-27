@@ -31,6 +31,15 @@ public class Bishop extends figure {
         } else if (Math.abs(this.row - moveRow) != Math.abs(this.columns - moveColumns)) {
             return false;
         } else {
+            int directionX = (moveColumns - this.columns) > 0 ? 1 : -1;
+            int directionY = (moveRow - this.row) > 0 ? 1 : -1;
+            for (int i = 1; i < Math.abs(moveRow - this.row); i++) {
+                int intermediateRow = this.row + i * directionY;
+                int intermediateColumn = this.columns + i * directionX;
+                if (board.getPiece(intermediateRow, intermediateColumn) != null) {
+                    return false;
+                }
+            }
             return true;
         }
 

@@ -7,8 +7,8 @@ public class board {
 
     public board() {
         this.setFigures = new figure[rows][columns];
-        setFigures[0][1] = new pawn("P", "black", 0, 0);
-        setFigures[0][0] = new pawn("Queen", "white", 1, 1);
+        setFigures[1][1] = new pawn("P", "black", 1, 1);
+        setFigures[3][5] = new pawn("Queen", "white", 1, 3);
         setFigures[0][2] = new Bishop("b", "white", 0, 2);
     }
 
@@ -25,6 +25,14 @@ public class board {
             setFigures[setRow][setColumn] = figure;
         }
 
+    }
+
+    Object getPiece(int row, int column) {
+        if (setFigures[row][column] == null) {
+            return null;
+        } else {
+            return 1;
+        }
     }
 
     public boolean validatePosition(int row, int column) {

@@ -75,13 +75,16 @@ public class board {
                         currentFigure.setNewLocation(moveRow - 1, moveColumns - 1);
                         setFigures[moveRow - 1][moveColumns - 1] = currentFigure;
                     } else {
-                        if (destinationFigure != null
-                                && !currentFigure.moveCondition(destinationFigure, locations, this)) {
-                            System.out.println("Can not move to the place that has the same color");
-                            return;
-                        } else {
-                            System.out.println("Invalid Move for " + currentFigure.getName());
-                            return;
+                        if (!currentFigure.moveCondition(destinationFigure, locations, this)) {
+                            if (destinationFigure != null && destinationFigure.getColor() == currentFigure.getColor()) {
+                                System.out.println("Can not move to that place becuase it has the same color");
+                                return;
+                            } else {
+                                System.out.println("Invalid Move for " + currentFigure.getName());
+                                return;
+
+                            }
+
                         }
 
                     }
